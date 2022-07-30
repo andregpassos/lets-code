@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "readline-sync": "^1.4.10",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "watch": "npx tsc --watch",
+    "game": "cd src && node projeto-final.js"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.2",
+    "@types/readline-sync": "^1.4.4"
+  }
+}
