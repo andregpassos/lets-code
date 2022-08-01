@@ -1,8 +1,10 @@
 import * as readlineSync from 'readline-sync';
 import ololog from 'ololog';
-import { showMsgAndSleep, sleep } from './utils/sleep.js';
+import { sleep } from './utils/sleep.js';
+import * as desenhos from './assets/desenhos.js';
+import { getPalavraForca } from './assets/palavras.js';
 
-const olog = ololog.configure({locate:false, time:false})
+const olog = ololog.configure({locate:false, time:false});
 const write = (data: any) => process.stdout.write(data);
 const writeln = (data: any) => process.stdout.write(data + '\n');
 
@@ -34,8 +36,8 @@ while (selectedOption !== 2) {
     readlineSync.keyIn("", { hideEchoBack: true, mask: '', limit: 'c' });
   }
 
-  const palavra: string = "CANGACEIRO";
-  let errosPossiveis: number = 1;
+  let palavra: string = getPalavraForca();
+  let errosPossiveis: number = 6;
 
   let palavraEscondida: string[] = [];
   for (let char of palavra) {
@@ -44,17 +46,45 @@ while (selectedOption !== 2) {
 
   let letrasDigitadas: string[] = [];
 
-  const printSituacaoJogo = (): void => {
+  function printBoneco(errosRestantes: number) {
+    switch (errosRestantes) {
+      case 5:
+        desenhos.drawHead();
+        break;
+      case 4:
+        desenhos.drawBody();
+        break;
+      case 3:
+        desenhos.drawBodyAndLeftArm();
+        break;
+      case 2:
+        desenhos.drawBodyAndBothArms();
+        break;
+      case 1:
+        desenhos.drawBodyArmsAndLeftLeg();
+        break;
+      case 0:
+        desenhos.drawDeadPerson();
+        break;
+      default:
+        break;
+    }
+  }
+
+  const printSituacaoJogo = (errosRestantes: number): void => {
     clearScreenAndPrintTitle();
     writeln('\n' + "Palavra: \n");
     palavraEscondida.forEach(letra => write(letra + ' '));
     write('\t' + `Letras ja digitadas: ${letrasDigitadas}`);
     olog.lightCyan('\n\n' + `Nome do jogador: ${nomeJogador}`);
     olog.yellow(`Erros possiveis: ${errosPossiveis}\n`);
+
+    printBoneco(errosRestantes);
+
     printEndMenu();
   }
 
-  printSituacaoJogo();
+  printSituacaoJogo(errosPossiveis);
 
   //verifica se ainda pode cometer erro e se a palavra nao foi completada
   while (errosPossiveis > 0 && palavraEscondida.includes('_')) {
@@ -82,10 +112,10 @@ while (selectedOption !== 2) {
       }
     }
 
-    printSituacaoJogo();
+    printSituacaoJogo(errosPossiveis);
     if (errosPossiveis === 0) olog.lightRed.bright("Morreeu 😵 ☠️  👻\n");
   }
-  if (errosPossiveis > 0) olog.lightGreen.bright('\n\t' + "✨✨✨✨ Voce ganhou o jogo! ✨✨✨✨\n");
+  if (errosPossiveis > 0) olog.lightGreen.bright('\n\t' + "   ✨✨✨✨ Voce ganhou o jogo! ✨✨✨✨\n");
 
   const optionsEndGame: string[] = ["Jogar novamente", "Mudar o jogador", "Encerrar o jogo"];
 
