@@ -12,22 +12,15 @@ let nomeJogador = "";
 let selectedOption = 1; // inicia selecionando o jogador
 // selectedOption: 0 -> jogar novamente, 1 -> mudar jogador, 2 -> encerrar o jogo
 while (selectedOption !== 2) {
-    function clearScreenAndPrintTitle() {
-        console.clear();
-        olog.lightYellow.bright('\n' + "======================== JOGO DA FORCA ========================\n");
-    }
-    function printEndMenu() {
-        olog.lightYellow.bright('\n' + "===============================================================\n");
-    }
     // mudar jogador
     if (selectedOption === 1) {
-        clearScreenAndPrintTitle();
+        desenhos.clearScreenAndPrintTitle();
         nomeJogador = readlineSync.question("Informe o nome do jogador: ");
-        clearScreenAndPrintTitle();
+        desenhos.clearScreenAndPrintTitle();
         write('\n' + "Bem-vindo ao Jogo da Forca, ");
         olog.lightCyan(nomeJogador + '\n');
         olog.green("Pressione 'C' para continuar...");
-        printEndMenu();
+        desenhos.printEndMenu();
         readlineSync.keyIn("", { hideEchoBack: true, mask: '', limit: 'c' });
     }
     let palavra = (0, palavras_js_1.getPalavraForca)();
@@ -37,39 +30,15 @@ while (selectedOption !== 2) {
         palavraEscondida.push('_');
     }
     let letrasDigitadas = [];
-    function printBoneco(errosRestantes) {
-        switch (errosRestantes) {
-            case 5:
-                desenhos.drawHead();
-                break;
-            case 4:
-                desenhos.drawBody();
-                break;
-            case 3:
-                desenhos.drawBodyAndLeftArm();
-                break;
-            case 2:
-                desenhos.drawBodyAndBothArms();
-                break;
-            case 1:
-                desenhos.drawBodyArmsAndLeftLeg();
-                break;
-            case 0:
-                desenhos.drawDeadPerson();
-                break;
-            default:
-                break;
-        }
-    }
     const printSituacaoJogo = (errosRestantes) => {
-        clearScreenAndPrintTitle();
+        desenhos.clearScreenAndPrintTitle();
         writeln('\n' + "Palavra: \n");
         palavraEscondida.forEach(letra => write(letra + ' '));
         write('\t' + `Letras ja digitadas: ${letrasDigitadas}`);
         olog.lightCyan('\n\n' + `Nome do jogador: ${nomeJogador}`);
         olog.yellow(`Erros possiveis: ${errosPossiveis}\n`);
-        printBoneco(errosRestantes);
-        printEndMenu();
+        desenhos.printBoneco(errosRestantes);
+        desenhos.printEndMenu();
     };
     printSituacaoJogo(errosPossiveis);
     //verifica se ainda pode cometer erro e se a palavra nao foi completada

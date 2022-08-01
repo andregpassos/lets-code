@@ -1,7 +1,16 @@
-import { clear } from 'console';
 import ololog from 'ololog';
 
 const olog = ololog.configure({locate:false, time:false});
+
+
+export function clearScreenAndPrintTitle(): void {
+  console.clear();
+  olog.lightYellow.bright('\n' + "======================== JOGO DA FORCA ========================\n");
+}
+
+export function printEndMenu(): void {
+  olog.lightYellow.bright('\n' + "===============================================================\n");
+}
 
 export function drawHead(): void {
   olog.lightYellow.bright("        _____");
@@ -71,10 +80,27 @@ export function drawDeadPerson(): void {
   olog.lightYellow.bright("      //     \\\\");
 }
 
-// drawHead();
-// drawBody();
-// drawBodyAndLeftArm();
-// drawBodyAndBothArms();
-// drawBodyArmsAndLeftLeg();
-// drawFullBody();
-// drawDeadPerson();
+export function printBoneco(errosRestantes: number) {
+    switch (errosRestantes) {
+      case 5:
+        drawHead();
+        break;
+      case 4:
+        drawBody();
+        break;
+      case 3:
+        drawBodyAndLeftArm();
+        break;
+      case 2:
+        drawBodyAndBothArms();
+        break;
+      case 1:
+        drawBodyArmsAndLeftLeg();
+        break;
+      case 0:
+        drawDeadPerson();
+        break;
+      default:
+        break;
+    }
+  }
