@@ -23,7 +23,7 @@ while (selectedOption !== 2) {
         desenhos.printEndMenu();
         readlineSync.keyIn("", { hideEchoBack: true, mask: '', limit: 'c' });
     }
-    let palavra = (0, palavras_js_1.getPalavraForca)();
+    const palavra = (0, palavras_js_1.getPalavraForca)();
     let errosPossiveis = 6;
     let palavraEscondida = [];
     for (let char of palavra) {
@@ -67,8 +67,11 @@ while (selectedOption !== 2) {
             }
         }
         printSituacaoJogo(errosPossiveis);
-        if (errosPossiveis === 0)
+        if (errosPossiveis === 0) {
             olog.lightRed.bright("Morreeu 😵 ☠️  👻\n");
+            write("A palavra era: ");
+            olog.lightYellow.bright(palavra);
+        }
     }
     if (errosPossiveis > 0)
         olog.lightGreen.bright('\n\t' + "   ✨✨✨✨ Voce ganhou o jogo! ✨✨✨✨\n");

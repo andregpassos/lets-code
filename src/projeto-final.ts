@@ -27,7 +27,7 @@ while (selectedOption !== 2) {
     readlineSync.keyIn("", { hideEchoBack: true, mask: '', limit: 'c' });
   }
 
-  let palavra: string = getPalavraForca();
+  const palavra: string = getPalavraForca();
   let errosPossiveis: number = 6;
 
   let palavraEscondida: string[] = [];
@@ -79,7 +79,11 @@ while (selectedOption !== 2) {
     }
 
     printSituacaoJogo(errosPossiveis);
-    if (errosPossiveis === 0) olog.lightRed.bright("Morreeu 😵 ☠️  👻\n");
+    if (errosPossiveis === 0) {
+      olog.lightRed.bright("Morreeu 😵 ☠️  👻\n");
+      write("A palavra era: ");
+      olog.lightYellow.bright(palavra);
+    }
   }
   if (errosPossiveis > 0) olog.lightGreen.bright('\n\t' + "   ✨✨✨✨ Voce ganhou o jogo! ✨✨✨✨\n");
 
