@@ -1,0 +1,45 @@
+.containerHeader {
+  height: 250px;
+  padding-left: 160px;
+  padding-right: 160px;
+  padding-top: 50px;
+  display: flex;
+  justify-content: space-between;
+
+  background: #0b1923;
+}
+
+img {
+  height: 54px;
+  width: 54px;
+  margin-right: 12px;
+}
+
+button {
+  height: 48px;
+  width: 195px;
+
+  border-radius: 5px;
+  background-color: #ffc843;
+  border: none;
+
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #0b1923;
+
+  cursor: pointer;
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+.fontMyFinances {
+  margin-top: 5px;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 45px;
+
+  color: #ffffff;
+}
