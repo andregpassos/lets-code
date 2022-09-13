@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 import imageCoin from "../../assets/images/money_coin.png";
+import ModalComponent from "../ModalComponent";
 
 export default function Header() {
   return (
@@ -8,7 +9,7 @@ export default function Header() {
         <img src={imageCoin} alt="image coin" />
         <h1 className={styles.fontMyFinances}>My Finances</h1>
       </div>
-      <button>Nova transação</button>
+      <ModalComponent />
     </div>
   );
 }
