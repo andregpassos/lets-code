@@ -1,24 +1,15 @@
 import styles from "./styles.module.scss";
 import Modal from "react-modal";
-import React from "react";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    width: "500px",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    padding: "20px 40px",
-    background: "#e5e5e5",
-  },
-};
+import React, { useState } from "react";
+import { customStyles } from "./utils";
 
 export default function ModalComponent() {
   let subtitle: any;
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
 
   function openModal() {
     setIsOpen(true);
@@ -32,6 +23,41 @@ export default function ModalComponent() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  function saveData() {
+    const ul = document.getElementById("transactionList");
+    const li = document.createElement("li");
+
+    //transaction
+    const titleTr = document.createElement("p");
+    const priceTr = document.createElement("p");
+    const categoryTr = document.createElement("p");
+    const dateTr = document.createElement("p");
+    ////data
+    titleTr.textContent = title;
+    priceTr.textContent = price;
+    categoryTr.textContent = category;
+    //////fix toLocaleDateString
+    let dataCorreta = new Date(date);
+    dataCorreta.setDate(dataCorreta.getDate() + 1);
+    //////set date
+    dateTr.textContent = dataCorreta.toLocaleDateString();
+    ////style
+    titleTr.style.width = "300px";
+    priceTr.style.width = "150px";
+    categoryTr.style.width = "150px";
+    dateTr.style.width = "90px";
+
+    ul?.appendChild(li);
+    li.appendChild(titleTr);
+    li.appendChild(priceTr);
+    li.appendChild(categoryTr);
+    li.appendChild(dateTr);
+
+    closeModal();
+  }
+
+  Modal.setAppElement("#root");
 
   return (
     <div>
@@ -52,24 +78,34 @@ export default function ModalComponent() {
           </button>
         </div>
         <p>Preencha os campos</p>
-        <form className={styles.formTransaction} id="formTransaction">
-          <input id="title" placeholder="Título" />
-          <input id="price" placeholder="Preço" />
-          <input id="category" placeholder="Categoria" />
+        <div className={styles.divTransaction}>
+          <input
+            id="title"
+            placeholder="Título"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <input
+            id="price"
+            type="number"
+            placeholder="Preço"
+            onChange={(e) => setPrice(`R$ ${e.target.value}`)}
+          />
+          <input
+            id="category"
+            placeholder="Categoria"
+            onChange={(e) => setCategory(e.target.value)}
+          />
           <input
             id="date"
+            type="date"
             style={{ marginBottom: "10px" }}
             placeholder="Data"
+            onChange={(e) => setDate(e.target.value)}
           />
-          <button
-            type="submit"
-            form="formTransaction"
-            className={styles.btnInserir}
-            onClick={closeModal}
-          >
+          <button className={styles.btnInserir} onClick={saveData}>
             Adicionar
           </button>
-        </form>
+        </div>
       </Modal>
     </div>
   );
